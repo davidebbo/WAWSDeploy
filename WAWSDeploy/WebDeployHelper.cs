@@ -11,6 +11,8 @@ namespace WAWSDeploy
     {
         public DeploymentChangeSummary DeployContentToOneSite(string contentPath, string publishSettingsFile)
         {
+            contentPath = Path.GetFullPath(contentPath);
+
             var sourceBaseOptions = new DeploymentBaseOptions();
             DeploymentBaseOptions destBaseOptions;
             string siteName = ParsePublishSettings(publishSettingsFile, out destBaseOptions);
