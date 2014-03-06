@@ -10,8 +10,8 @@ namespace WAWSDeploy
         {
             if (args.Length < 2)
             {
-                Trace.WriteLine(@"Syntax 1: WAWSDeploy.exe c:\SomeFolder MySite.PublishSettings [/p password]");
-                Trace.WriteLine(@"Syntax 2: WAWSDeploy.exe c:\SomeFile.zip MySite.PublishSettings [/p password]");
+                WriteLine(@"Syntax 1: WAWSDeploy.exe c:\SomeFolder MySite.PublishSettings [/p password]");
+                WriteLine(@"Syntax 2: WAWSDeploy.exe c:\SomeFile.zip MySite.PublishSettings [/p password]");
                 return;
             }
 
@@ -21,21 +21,26 @@ namespace WAWSDeploy
             try
             {
                 var webDeployHelper = new WebDeployHelper();
-                Trace.WriteLine("Starting deployment...");
+                WriteLine("Starting deployment...");
                 DeploymentChangeSummary changeSummary = webDeployHelper.DeployContentToOneSite(command.Folder, command.PublishSettingsFile, command.Password);
 
-                Trace.WriteLine(string.Format("BytesCopied: {0}", changeSummary.BytesCopied));
-                Trace.WriteLine(string.Format("Added: {0}", changeSummary.ObjectsAdded));
-                Trace.WriteLine(string.Format("Updated: {0}", changeSummary.ObjectsUpdated));
-                Trace.WriteLine(string.Format("Deleted: {0}", changeSummary.ObjectsDeleted));
-                Trace.WriteLine(string.Format("Errors: {0}", changeSummary.Errors));
-                Trace.WriteLine(string.Format("Warnings: {0}", changeSummary.Warnings));
-                Trace.WriteLine(string.Format("Total changes: {0}", changeSummary.TotalChanges));
+                WriteLine("BytesCopied: {0}", changeSummary.BytesCopied);
+                WriteLine("Added: {0}", changeSummary.ObjectsAdded);
+                WriteLine("Updated: {0}", changeSummary.ObjectsUpdated);
+                WriteLine("Deleted: {0}", changeSummary.ObjectsDeleted);
+                WriteLine("Errors: {0}", changeSummary.Errors);
+                WriteLine("Warnings: {0}", changeSummary.Warnings);
+                WriteLine("Total changes: {0}", changeSummary.TotalChanges);
             }
             catch (Exception e)
             {
-                Trace.WriteLine(string.Format("Deployment failed: {0}", e.Message));
+                WriteLine("Deployment failed: {0}", e.Message);
             }
+        }
+
+        static void WriteLine(string message, params object[] args)
+        {
+            Trace.WriteLine(String.Format(message, args));
         }
     }
 }
