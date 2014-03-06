@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using Microsoft.Web.Deployment;
 
 namespace WAWSDeploy
@@ -11,30 +8,33 @@ namespace WAWSDeploy
     {
         static void Main(string[] args)
         {
-            if (args.Length != 2)
+            if (args.Length < 2)
             {
-                Console.WriteLine(@"Syntax 1: WAWSDeploy.exe c:\SomeFolder MySite.PublishSettings");
-                Console.WriteLine(@"Syntax 2: WAWSDeploy.exe c:\SomeFile.zip MySite.PublishSettings");
+                Trace.WriteLine(@"Syntax 1: WAWSDeploy.exe c:\SomeFolder MySite.PublishSettings");
+                Trace.WriteLine(@"Syntax 2: WAWSDeploy.exe c:\SomeFile.zip MySite.PublishSettings");
                 return;
             }
+
+            // parse the command line args
+            var command = Args.Configuration.Configure<DeploymentArgs>().CreateAndBind(args);
 
             try
             {
                 var webDeployHelper = new WebDeployHelper();
-                Console.WriteLine("Starting deployment...");
-                DeploymentChangeSummary changeSummary = webDeployHelper.DeployContentToOneSite(args[0], args[1]);
+                Trace.WriteLine("Starting deployment...");
+                DeploymentChangeSummary changeSummary = webDeployHelper.DeployContentToOneSite(command.Folder, command.PublishSettingsFile, command.Password);
 
-                Console.WriteLine("BytesCopied: {0}", changeSummary.BytesCopied);
-                Console.WriteLine("Added: {0}", changeSummary.ObjectsAdded);
-                Console.WriteLine("Updated: {0}", changeSummary.ObjectsUpdated);
-                Console.WriteLine("Deleted: {0}", changeSummary.ObjectsDeleted);
-                Console.WriteLine("Errors: {0}", changeSummary.Errors);
-                Console.WriteLine("Warnings: {0}", changeSummary.Warnings);
-                Console.WriteLine("Total changes: {0}", changeSummary.TotalChanges);
+                Trace.WriteLine(string.Format("BytesCopied: {0}", changeSummary.BytesCopied));
+                Trace.WriteLine(string.Format("Added: {0}", changeSummary.ObjectsAdded));
+                Trace.WriteLine(string.Format("Updated: {0}", changeSummary.ObjectsUpdated));
+                Trace.WriteLine(string.Format("Deleted: {0}", changeSummary.ObjectsDeleted));
+                Trace.WriteLine(string.Format("Errors: {0}", changeSummary.Errors));
+                Trace.WriteLine(string.Format("Warnings: {0}", changeSummary.Warnings));
+                Trace.WriteLine(string.Format("Total changes: {0}", changeSummary.TotalChanges));
             }
             catch (Exception e)
             {
-                Console.WriteLine("Deployment failed: {0}", e.Message);
+                Trace.WriteLine(string.Format("Deployment failed: {0}", e.Message));
             }
         }
     }

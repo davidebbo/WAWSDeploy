@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
@@ -9,13 +8,24 @@ namespace WAWSDeploy
 {
     public class WebDeployHelper
     {
-        public DeploymentChangeSummary DeployContentToOneSite(string contentPath, string publishSettingsFile)
+        /// <summary>
+        /// Deploys the content to one site.
+        /// </summary>
+        /// <param name="contentPath">The content path.</param>
+        /// <param name="publishSettingsFile">The publish settings file.</param>
+        /// <param name="password">The password.</param>
+        /// <returns>DeploymentChangeSummary.</returns>
+        public DeploymentChangeSummary DeployContentToOneSite(string contentPath, string publishSettingsFile, string password = null)
         {
             contentPath = Path.GetFullPath(contentPath);
 
             var sourceBaseOptions = new DeploymentBaseOptions();
             DeploymentBaseOptions destBaseOptions;
             string siteName = ParsePublishSettings(publishSettingsFile, out destBaseOptions);
+
+            // use the password from the command line args if provided
+            if (!string.IsNullOrEmpty(password))
+                destBaseOptions.Password = password;
 
             // If the content path is a zip file, use the Package provider
             DeploymentWellKnownProvider provider;

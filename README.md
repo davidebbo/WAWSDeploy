@@ -8,3 +8,8 @@ Sample use:
 
     WAWSDeploy c:\somefolder mysite.PublishSettings
     WAWSDeploy c:\somefile.zip mysite.PublishSettings
+
+With optional password argument
+
+    WAWSDeploy c:\somefolder mysite.PublishSettings /p mypubsettingspassword
+    WAWSDeploy c:\somefolder mysite.PublishSettings /password mypubsettingspassword

@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
-  <metadata>
-    <id>WAWSDeploy</id>
-    <title>WAWSDeploy</title>
-    <version>1.1</version>
-    <authors>David Ebbo</authors>
-    <summary>A simple tool to publish a folder to an Azure Web Site</summary>
-    <description>A simple tool to publish a folder to an Azure Web Site</description>
-    <projectUrl>https://github.com/davidebbo/WAWSDeploy</projectUrl>
-    <tags>azure websites webdeploy msdeploy</tags>
-    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</licenseUrl>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <releaseNotes></releaseNotes>
-  </metadata>
-  <files>
-    <file src="bin\debug\WAWSDeploy.exe" target="tools" />
-  </files>
+	<metadata>
+		<id>WAWSDeploy</id>
+		<title>WAWSDeploy</title>
+		<version>1.2</version>
+		<authors>David Ebbo</authors>
+		<summary>A simple tool to publish a folder to an Azure Web Site</summary>
+		<description>A simple tool to publish a folder to an Azure Web Site</description>
+		<projectUrl>https://github.com/davidebbo/WAWSDeploy</projectUrl>
+		<tags>azure websites webdeploy msdeploy</tags>
+		<licenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</licenseUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<releaseNotes></releaseNotes>
+	</metadata>
+	<files>
+		<file src="bin\debug\WAWSDeploy.exe" target="tools" />
+		<file src="bin\debug\WAWSDeploy.exe.config" target="tools" />
+		<file src="bin\debug\Args.dll" target="tools" />
+	</files>
 </package>
