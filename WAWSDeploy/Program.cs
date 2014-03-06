@@ -13,7 +13,8 @@ namespace WAWSDeploy
         {
             if (args.Length != 2)
             {
-                Console.WriteLine("Syntax: WAWSDeploy.exe FolderToDeploy MySite.PublishSettings");
+                Console.WriteLine(@"Syntax 1: WAWSDeploy.exe c:\SomeFolder MySite.PublishSettings");
+                Console.WriteLine(@"Syntax 2: WAWSDeploy.exe c:\SomeFile.zip MySite.PublishSettings");
                 return;
             }
 

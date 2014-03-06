@@ -3,7 +3,7 @@
   <metadata>
     <id>WAWSDeploy</id>
     <title>WAWSDeploy</title>
-    <version>1.0</version>
+    <version>1.1</version>
     <authors>David Ebbo</authors>
     <summary>A simple tool to publish a folder to an Azure Web Site</summary>
     <description>A simple tool to publish a folder to an Azure Web Site</description>
@@ -11,10 +11,6 @@
     <tags>azure websites webdeploy msdeploy</tags>
     <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <!--<iconUrl>https://raw.github.com/__CHOCO_PKG_OWNER_REPO__/master/__NAME__/__NAME__.png</iconUrl>-->
-    <!--<dependencies>
-      <dependency id="" version="" />
-    </dependencies>-->
     <releaseNotes></releaseNotes>
   </metadata>
   <files>
