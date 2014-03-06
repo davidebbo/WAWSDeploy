@@ -17,8 +17,6 @@ namespace WAWSDeploy
             DeploymentBaseOptions destBaseOptions;
             string siteName = ParsePublishSettings(publishSettingsFile, out destBaseOptions);
 
-            Trace.TraceInformation("Starting WebDeploy for {0}", Path.GetFileName(publishSettingsFile));
-
             // Publish the content to the remote site
             using (var deploymentObject = DeploymentManager.CreateObject(DeploymentWellKnownProvider.ContentPath, contentPath, sourceBaseOptions))
             {
