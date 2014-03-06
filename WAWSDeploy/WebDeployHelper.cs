@@ -17,8 +17,19 @@ namespace WAWSDeploy
             DeploymentBaseOptions destBaseOptions;
             string siteName = ParsePublishSettings(publishSettingsFile, out destBaseOptions);
 
+            // If the content path is a zip file, use the Package provider
+            DeploymentWellKnownProvider provider;
+            if (Path.GetExtension(contentPath).Equals(".zip", StringComparison.OrdinalIgnoreCase))
+            {
+                provider = DeploymentWellKnownProvider.Package;
+            }
+            else
+            {
+                provider = DeploymentWellKnownProvider.ContentPath;
+            }
+
             // Publish the content to the remote site
-            using (var deploymentObject = DeploymentManager.CreateObject(DeploymentWellKnownProvider.ContentPath, contentPath, sourceBaseOptions))
+            using (var deploymentObject = DeploymentManager.CreateObject(provider, contentPath, sourceBaseOptions))
             {
                 // Note: would be nice to have an async flavor of this API...
                 return deploymentObject.SyncTo(DeploymentWellKnownProvider.ContentPath, siteName, destBaseOptions, new DeploymentSyncOptions());
