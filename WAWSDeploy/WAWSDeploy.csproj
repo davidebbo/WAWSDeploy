@@ -52,6 +52,7 @@
     <Compile Include="DeploymentArgs.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PublishSettings.cs" />
     <Compile Include="WebDeployHelper.cs" />
   </ItemGroup>
   <ItemGroup>
