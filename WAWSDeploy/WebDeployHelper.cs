@@ -1,8 +1,9 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
-using System.Xml.Linq;
 using Microsoft.Web.Deployment;
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
+using System.Net.Security;
 
 namespace WAWSDeploy
 {
@@ -21,7 +22,7 @@ namespace WAWSDeploy
 
             var sourceBaseOptions = new DeploymentBaseOptions();
             DeploymentBaseOptions destBaseOptions;
-            string siteName = ParsePublishSettings(publishSettingsFile, out destBaseOptions);
+            string siteName = SetBaseOptions(publishSettingsFile, out destBaseOptions);
 
             // use the password from the command line args if provided
             if (!string.IsNullOrEmpty(password))
@@ -46,22 +47,28 @@ namespace WAWSDeploy
             }
         }
 
-        private string ParsePublishSettings(string path, out DeploymentBaseOptions deploymentBaseOptions)
+        private string SetBaseOptions(string publishSettingsPath, out DeploymentBaseOptions deploymentBaseOptions)
         {
-            var document = XDocument.Load(path);
-            var profile = document.Descendants("publishProfile").First();
-
-            string siteName = profile.Attribute("msdeploySite").Value;
-
+            PublishSettings publishSettings = new PublishSettings(publishSettingsPath);
             deploymentBaseOptions = new DeploymentBaseOptions
             {
-                ComputerName = String.Format("https://{0}/msdeploy.axd?site={1}", profile.Attribute("publishUrl").Value, siteName),
-                UserName = profile.Attribute("userName").Value,
-                Password = profile.Attribute("userPWD").Value,
-                AuthenticationType = "Basic"
+                ComputerName = publishSettings.ComputerName,
+                UserName = publishSettings.Username,
+                Password = publishSettings.Password,
+                AuthenticationType = publishSettings.UseNTLM ? "ntlm" : "basic",
             };
 
-            return siteName;
+            if (publishSettings.AllowUntrusted)
+            {
+                ServicePointManager.ServerCertificateValidationCallback = AllowCertificateCallback;
+            }
+
+            return publishSettings.SiteName;
+        }
+
+        private static bool AllowCertificateCallback(object sender, X509Certificate cert, X509Chain chain, SslPolicyErrors errors)
+        {
+            return true;
         }
     }
 }
