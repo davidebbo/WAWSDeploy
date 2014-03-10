@@ -3,7 +3,7 @@
   <metadata>
     <id>WAWSDeploy</id>
     <title>WAWSDeploy</title>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
     <authors>David Ebbo</authors>
     <summary>A simple tool to publish a folder to an Azure Web Site</summary>
     <description>A simple tool to publish a folder to an Azure Web Site</description>
