@@ -15,14 +15,15 @@ namespace WAWSDeploy
         /// <param name="contentPath">The content path.</param>
         /// <param name="publishSettingsFile">The publish settings file.</param>
         /// <param name="password">The password.</param>
+        /// <param name="allowUntrusted">Deploy even if destination certificate is untrusted</param>
         /// <returns>DeploymentChangeSummary.</returns>
-        public DeploymentChangeSummary DeployContentToOneSite(string contentPath, string publishSettingsFile, string password = null)
+        public DeploymentChangeSummary DeployContentToOneSite(string contentPath, string publishSettingsFile, string password = null, bool allowUntrusted = false)
         {
             contentPath = Path.GetFullPath(contentPath);
 
             var sourceBaseOptions = new DeploymentBaseOptions();
             DeploymentBaseOptions destBaseOptions;
-            string siteName = SetBaseOptions(publishSettingsFile, out destBaseOptions);
+            string siteName = SetBaseOptions(publishSettingsFile, out destBaseOptions, allowUntrusted);
 
             // use the password from the command line args if provided
             if (!string.IsNullOrEmpty(password))
@@ -47,7 +48,7 @@ namespace WAWSDeploy
             }
         }
 
-        private string SetBaseOptions(string publishSettingsPath, out DeploymentBaseOptions deploymentBaseOptions)
+        private string SetBaseOptions(string publishSettingsPath, out DeploymentBaseOptions deploymentBaseOptions, bool allowUntrusted)
         {
             PublishSettings publishSettings = new PublishSettings(publishSettingsPath);
             deploymentBaseOptions = new DeploymentBaseOptions
@@ -58,7 +59,7 @@ namespace WAWSDeploy
                 AuthenticationType = publishSettings.UseNTLM ? "ntlm" : "basic",
             };
 
-            if (publishSettings.AllowUntrusted)
+            if (allowUntrusted || publishSettings.AllowUntrusted)
             {
                 ServicePointManager.ServerCertificateValidationCallback = AllowCertificateCallback;
             }
