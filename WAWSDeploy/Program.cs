@@ -12,6 +12,7 @@ namespace WAWSDeploy
             {
                 WriteLine(@"Syntax 1: WAWSDeploy.exe c:\SomeFolder MySite.PublishSettings [/p password]");
                 WriteLine(@"Syntax 2: WAWSDeploy.exe c:\SomeFile.zip MySite.PublishSettings [/p password]");
+                WriteLine(@"Syntax 3: WAWSDeploy.exe c:\SomeFile.zip MySite.PublishSettings [/au]");
                 return;
             }
 
@@ -22,7 +23,7 @@ namespace WAWSDeploy
             {
                 var webDeployHelper = new WebDeployHelper();
                 WriteLine("Starting deployment...");
-                DeploymentChangeSummary changeSummary = webDeployHelper.DeployContentToOneSite(command.Folder, command.PublishSettingsFile, command.Password);
+                DeploymentChangeSummary changeSummary = webDeployHelper.DeployContentToOneSite(command.Folder, command.PublishSettingsFile, command.Password, command.AllowUntrusted);
 
                 WriteLine("BytesCopied: {0}", changeSummary.BytesCopied);
                 WriteLine("Added: {0}", changeSummary.ObjectsAdded);

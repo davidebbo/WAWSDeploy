@@ -27,5 +27,13 @@ namespace WAWSDeploy
         /// <value>The password.</value>
         [ArgsMemberSwitch("p", "password", "pw")]
         public string Password { get; set; }
+
+        /// <summary>
+        /// Gets or sets the allowUntrusted flag
+        /// </summary>
+        /// <value>true or false</value>
+        [ArgsMemberSwitch("u", "allowuntrusted", "au")]
+        public bool AllowUntrusted { get; set; }
+
     }
 }
