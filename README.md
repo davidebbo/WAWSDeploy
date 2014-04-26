@@ -19,6 +19,18 @@ Allowing untrusted cert
     WAWSDeploy c:\somefolder mysite.PublishSettings /au
 
 
+Do not delete files on the remote server
+
+	WAWSDeploy c:\somefolder mysite.PublishSettings /d
+
+
+View all remote server output on the console
+
+	WAWSDeploy c:\somefolder mysite.PublishSettings /v
+
+	
+
+
 ## To build this project
 
     npm install -g grunt-cli
