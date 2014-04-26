@@ -10,7 +10,7 @@ namespace WAWSDeploy
         {
             if (args.Length < 2)
             {
-                WriteLine(@"Syntax 1: WAWSDeploy.exe c:\SomeFolder MySite.PublishSettings [/p password]");
+                WriteLine(@"Syntax 1: WAWSDeploy.exe c:\SomeFolder MySite.PublishSettings [/p password] [/d donotdelete] [/v verbose output]");
                 WriteLine(@"Syntax 2: WAWSDeploy.exe c:\SomeFile.zip MySite.PublishSettings [/p password]");
                 WriteLine(@"Syntax 3: WAWSDeploy.exe c:\SomeFile.zip MySite.PublishSettings [/au]");
                 return;
