@@ -18,6 +18,14 @@ Allowing untrusted cert
 
     WAWSDeploy c:\somefolder mysite.PublishSettings /au
 
+Do Not Delete files on the remote host
+
+    WAWSDeploy c:\somefolder mysite.PublishSettings /d
+
+Verbose Logging
+
+    WAWSDeploy c:\somefolder mysite.PublishSettings /v
+    
 
 ## To build this project
 
