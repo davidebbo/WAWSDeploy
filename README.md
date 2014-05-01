@@ -25,6 +25,12 @@ Do Not Delete files on the remote host
 Verbose Logging
 
     WAWSDeploy c:\somefolder mysite.PublishSettings /v
+
+[What If deployment](http://www.asp.net/web-forms/tutorials/deployment/advanced-enterprise-web-deployment/performing-a-what-if-deployment)
+
+    WAWSDeploy c:\somefolder mysite.PublishSettings /w
+
+
     
 
 ## To build this project
