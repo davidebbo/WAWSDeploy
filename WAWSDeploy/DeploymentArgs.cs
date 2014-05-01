@@ -1,4 +1,5 @@
 ﻿using Args;
+using System.Diagnostics;
 
 namespace WAWSDeploy
 {
@@ -34,6 +35,26 @@ namespace WAWSDeploy
         /// <value>true or false</value>
         [ArgsMemberSwitch("u", "allowuntrusted", "au")]
         public bool AllowUntrusted { get; set; }
+
+        [ArgsMemberSwitch("d", "donotdelete", "dd")]
+        public bool DoNotDelete { get; set; }
+
+        [ArgsMemberSwitch("v", "verbose", "vb")]
+        public bool Verbose { get; set; }
+
+        [ArgsMemberSwitch("w", "whatif", "wi")]
+        public bool WhatIf { get; set; }
+
+        public TraceLevel TraceLevel
+        {
+            get
+            {
+                if (Verbose)
+                    return System.Diagnostics.TraceLevel.Verbose;
+
+                return System.Diagnostics.TraceLevel.Off;
+            }
+        }
 
     }
 }

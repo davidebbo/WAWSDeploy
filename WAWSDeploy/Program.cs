@@ -10,7 +10,7 @@ namespace WAWSDeploy
         {
             if (args.Length < 2)
             {
-                WriteLine(@"Syntax 1: WAWSDeploy.exe c:\SomeFolder MySite.PublishSettings [/p password]");
+                WriteLine(@"Syntax 1: WAWSDeploy.exe c:\SomeFolder MySite.PublishSettings [/p password] [/d DoNotDelete]");
                 WriteLine(@"Syntax 2: WAWSDeploy.exe c:\SomeFile.zip MySite.PublishSettings [/p password]");
                 WriteLine(@"Syntax 3: WAWSDeploy.exe c:\SomeFile.zip MySite.PublishSettings [/au]");
                 return;
@@ -22,8 +22,21 @@ namespace WAWSDeploy
             try
             {
                 var webDeployHelper = new WebDeployHelper();
+
+                webDeployHelper.DeploymentTraceEventHandler += Trace;
+
+
                 WriteLine("Starting deployment...");
-                DeploymentChangeSummary changeSummary = webDeployHelper.DeployContentToOneSite(command.Folder, command.PublishSettingsFile, command.Password, command.AllowUntrusted);
+                DeploymentChangeSummary changeSummary = webDeployHelper.DeployContentToOneSite(
+                    command.Folder, 
+                    command.PublishSettingsFile, 
+                    command.Password, 
+                    command.AllowUntrusted,
+                    command.DoNotDelete,
+                    command.TraceLevel,
+                    command.WhatIf
+
+                    );
 
                 WriteLine("BytesCopied: {0}", changeSummary.BytesCopied);
                 WriteLine("Added: {0}", changeSummary.ObjectsAdded);
@@ -39,9 +52,14 @@ namespace WAWSDeploy
             }
         }
 
+        static void Trace(object sender, DeploymentTraceEventArgs e)
+        {
+            Console.WriteLine(e.Message);
+        }
+
         static void WriteLine(string message, params object[] args)
         {
-            Trace.WriteLine(String.Format(message, args));
+            Console.WriteLine(String.Format(message, args));
         }
     }
 }
