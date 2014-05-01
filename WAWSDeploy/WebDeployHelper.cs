@@ -26,7 +26,8 @@ namespace WAWSDeploy
             string password = null,
             bool allowUntrusted = false,
             bool doNotDelete = true,
-            TraceLevel traceLevel = TraceLevel.Off)
+            TraceLevel traceLevel = TraceLevel.Off,
+            bool whatIf = false)
         {
             contentPath = Path.GetFullPath(contentPath);
 
@@ -55,13 +56,15 @@ namespace WAWSDeploy
 
             var syncOptions = new DeploymentSyncOptions
             {
-                DoNotDelete = doNotDelete
+                DoNotDelete = doNotDelete, 
+                WhatIf = whatIf
             };
 
             // Publish the content to the remote site
             using (var deploymentObject = DeploymentManager.CreateObject(provider, contentPath, sourceBaseOptions))
             {
                 // Note: would be nice to have an async flavor of this API...
+                
                 return deploymentObject.SyncTo(DeploymentWellKnownProvider.ContentPath, siteName, destBaseOptions, syncOptions);
             }
         }
@@ -74,12 +77,13 @@ namespace WAWSDeploy
         private string SetBaseOptions(string publishSettingsPath, out DeploymentBaseOptions deploymentBaseOptions, bool allowUntrusted)
         {
             PublishSettings publishSettings = new PublishSettings(publishSettingsPath);
+            
             deploymentBaseOptions = new DeploymentBaseOptions
             {
                 ComputerName = publishSettings.ComputerName,
                 UserName = publishSettings.Username,
                 Password = publishSettings.Password,
-                AuthenticationType = publishSettings.UseNTLM ? "ntlm" : "basic",
+                AuthenticationType = publishSettings.UseNTLM ? "ntlm" : "basic"
             };
 
             if (allowUntrusted || publishSettings.AllowUntrusted)

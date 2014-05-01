@@ -42,6 +42,9 @@ namespace WAWSDeploy
         [ArgsMemberSwitch("v", "verbose", "vb")]
         public bool Verbose { get; set; }
 
+        [ArgsMemberSwitch("w", "whatif", "wi")]
+        public bool WhatIf { get; set; }
+
         public TraceLevel TraceLevel
         {
             get

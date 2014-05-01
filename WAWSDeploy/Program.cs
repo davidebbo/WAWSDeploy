@@ -19,7 +19,6 @@ namespace WAWSDeploy
             // parse the command line args
             var command = Args.Configuration.Configure<DeploymentArgs>().CreateAndBind(args);
 
-
             try
             {
                 var webDeployHelper = new WebDeployHelper();
@@ -34,7 +33,9 @@ namespace WAWSDeploy
                     command.Password, 
                     command.AllowUntrusted,
                     command.DoNotDelete,
-                    command.TraceLevel
+                    command.TraceLevel,
+                    command.WhatIf
+
                     );
 
                 WriteLine("BytesCopied: {0}", changeSummary.BytesCopied);
