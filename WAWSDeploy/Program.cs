@@ -32,7 +32,7 @@ namespace WAWSDeploy
                     command.PublishSettingsFile, 
                     command.Password, 
                     command.AllowUntrusted,
-                    command.DoNotDelete,
+                    !command.DeleteExistingFiles,
                     command.TraceLevel,
                     command.WhatIf
 

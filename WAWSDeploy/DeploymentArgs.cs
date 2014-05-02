@@ -36,8 +36,8 @@ namespace WAWSDeploy
         [ArgsMemberSwitch("u", "allowuntrusted", "au")]
         public bool AllowUntrusted { get; set; }
 
-        [ArgsMemberSwitch("d", "donotdelete", "dd")]
-        public bool DoNotDelete { get; set; }
+        [ArgsMemberSwitch("d", "deleteexistingfiles", "def")]
+        public bool DeleteExistingFiles { get; set; }
 
         [ArgsMemberSwitch("v", "verbose", "vb")]
         public bool Verbose { get; set; }
