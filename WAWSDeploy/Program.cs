@@ -49,6 +49,7 @@ namespace WAWSDeploy
             catch (Exception e)
             {
                 WriteLine("Deployment failed: {0}", e.Message);
+                Environment.ExitCode = 1;
             }
         }
 
