@@ -10,9 +10,14 @@ namespace WAWSDeploy
         {
             if (args.Length < 2)
             {
-                WriteLine(@"Syntax 1: WAWSDeploy.exe c:\SomeFolder MySite.PublishSettings [/p password] [/d DoNotDelete]");
-                WriteLine(@"Syntax 2: WAWSDeploy.exe c:\SomeFile.zip MySite.PublishSettings [/p password]");
-                WriteLine(@"Syntax 3: WAWSDeploy.exe c:\SomeFile.zip MySite.PublishSettings [/au]");
+                WriteLine(@"WAWSDeploy version {0}", typeof(Program).Assembly.GetName().Version);
+                WriteLine(@"Usage: WAWSDeploy.exe c:\SomeFolder MySite.PublishSettings [flags]");
+                WriteLine(@"Options:");
+                WriteLine(@" /p  /password: provide the password if it's not in the profile");
+                WriteLine(@" /d  /DeleteExistingFiles: delete target files that don't exist at the source");
+                WriteLine(@" /au /AllowUntrusted: skip cert verification");
+                WriteLine(@" /v  /Verbose: Verbose mode");
+                WriteLine(@" /w  /WhatIf: don't actually perform the publishing");
                 return;
             }
 
