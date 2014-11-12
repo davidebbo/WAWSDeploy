@@ -45,6 +45,9 @@ namespace WAWSDeploy
         [ArgsMemberSwitch("w", "whatif", "wi")]
         public bool WhatIf { get; set; }
 
+        [ArgsMemberSwitch("s", "sitename", "sn")]
+        public string SiteName { get; set; }
+
         public TraceLevel TraceLevel
         {
             get
@@ -55,6 +58,5 @@ namespace WAWSDeploy
                 return System.Diagnostics.TraceLevel.Off;
             }
         }
-
     }
 }

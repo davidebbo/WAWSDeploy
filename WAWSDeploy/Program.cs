@@ -18,6 +18,7 @@ namespace WAWSDeploy
                 WriteLine(@" /au /AllowUntrusted: skip cert verification");
                 WriteLine(@" /v  /Verbose: Verbose mode");
                 WriteLine(@" /w  /WhatIf: don't actually perform the publishing");
+                WriteLine(@" /s  /SiteName: the name of a virtual directory to deploy to");
                 return;
             }
 
@@ -39,8 +40,8 @@ namespace WAWSDeploy
                     command.AllowUntrusted,
                     !command.DeleteExistingFiles,
                     command.TraceLevel,
-                    command.WhatIf
-
+                    command.WhatIf,
+                    command.SiteName
                     );
 
                 WriteLine("BytesCopied: {0}", changeSummary.BytesCopied);

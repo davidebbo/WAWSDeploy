@@ -16,25 +16,29 @@ namespace WAWSDeploy
         /// <summary>
         /// Deploys the content to one site.
         /// </summary>
-        /// <param name="contentPath">The content path.</param>
+        /// <param name="sourcePath">The content path.</param>
         /// <param name="publishSettingsFile">The publish settings file.</param>
         /// <param name="password">The password.</param>
         /// <param name="allowUntrusted">Deploy even if destination certificate is untrusted</param>
         /// <returns>DeploymentChangeSummary.</returns>
-        public DeploymentChangeSummary DeployContentToOneSite(string contentPath,
+        public DeploymentChangeSummary DeployContentToOneSite(string sourcePath,
             string publishSettingsFile,
             string password = null,
             bool allowUntrusted = false,
             bool doNotDelete = true,
             TraceLevel traceLevel = TraceLevel.Off,
-            bool whatIf = false)
+            bool whatIf = false,
+            string siteName = null)
         {
-            contentPath = Path.GetFullPath(contentPath);
+            sourcePath = Path.GetFullPath(sourcePath);
 
             var sourceBaseOptions = new DeploymentBaseOptions();
 
             DeploymentBaseOptions destBaseOptions;
-            string siteName = SetBaseOptions(publishSettingsFile, out destBaseOptions, allowUntrusted);
+            string destinationPath = SetBaseOptions(publishSettingsFile, out destBaseOptions, allowUntrusted);
+
+            if (!string.IsNullOrEmpty(siteName))
+                destinationPath += "/" + siteName;
 
             destBaseOptions.TraceLevel = traceLevel;
             destBaseOptions.Trace += destBaseOptions_Trace;
@@ -45,7 +49,7 @@ namespace WAWSDeploy
 
             // If the content path is a zip file, use the Package provider
             DeploymentWellKnownProvider provider;
-            if (Path.GetExtension(contentPath).Equals(".zip", StringComparison.OrdinalIgnoreCase))
+            if (Path.GetExtension(sourcePath).Equals(".zip", StringComparison.OrdinalIgnoreCase))
             {
                 provider = DeploymentWellKnownProvider.Package;
             }
@@ -61,11 +65,11 @@ namespace WAWSDeploy
             };
 
             // Publish the content to the remote site
-            using (var deploymentObject = DeploymentManager.CreateObject(provider, contentPath, sourceBaseOptions))
+            using (var deploymentObject = DeploymentManager.CreateObject(provider, sourcePath, sourceBaseOptions))
             {
                 // Note: would be nice to have an async flavor of this API...
-                
-                return deploymentObject.SyncTo(DeploymentWellKnownProvider.ContentPath, siteName, destBaseOptions, syncOptions);
+
+                return deploymentObject.SyncTo(DeploymentWellKnownProvider.ContentPath, destinationPath, destBaseOptions, syncOptions);
             }
         }
 
