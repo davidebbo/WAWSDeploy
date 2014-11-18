@@ -45,8 +45,8 @@ namespace WAWSDeploy
         [ArgsMemberSwitch("w", "whatif", "wi")]
         public bool WhatIf { get; set; }
 
-        [ArgsMemberSwitch("s", "sitename", "sn")]
-        public string SiteName { get; set; }
+        [ArgsMemberSwitch("t", "targetpath", "tp")]
+        public string TargetPath { get; set; }
 
         public TraceLevel TraceLevel
         {
