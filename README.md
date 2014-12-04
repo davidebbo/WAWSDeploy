@@ -18,7 +18,7 @@ Allowing untrusted cert
 
     WAWSDeploy c:\somefolder mysite.PublishSettings /au
 
-Do Not Delete files on the remote host
+Delete files on the remote host
 
     WAWSDeploy c:\somefolder mysite.PublishSettings /d
 
@@ -29,6 +29,10 @@ Verbose Logging
 [What If deployment](http://www.asp.net/web-forms/tutorials/deployment/advanced-enterprise-web-deployment/performing-a-what-if-deployment)
 
     WAWSDeploy c:\somefolder mysite.PublishSettings /w
+
+Target Path - The virtual directory to deploy to
+	
+	WAWSDeploy C:\somefolder mysite.PublisSettings /t someVirtualDirectoryName
 
 
     
