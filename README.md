@@ -32,7 +32,7 @@ Verbose Logging
 
 Target Path - The virtual directory to deploy to
 	
-	WAWSDeploy C:\somefolder mysite.PublisSettings /t someVirtualDirectoryName
+    WAWSDeploy C:\somefolder mysite.PublisSettings /t someVirtualDirectoryName
 
 
     
