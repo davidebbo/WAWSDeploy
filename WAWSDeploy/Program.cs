@@ -18,7 +18,7 @@ namespace WAWSDeploy
                 WriteLine(@" /au /AllowUntrusted: skip cert verification");
                 WriteLine(@" /v  /Verbose: Verbose mode");
                 WriteLine(@" /w  /WhatIf: don't actually perform the publishing");
-                WriteLine(@" /t  /TargetPath: the virtual directory to deploy to");
+                WriteLine(@" /t  /TargetPath: the virtual or physical directory to deploy to");
                 return;
             }
 

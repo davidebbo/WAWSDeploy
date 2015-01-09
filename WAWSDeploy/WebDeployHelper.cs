@@ -28,7 +28,7 @@ namespace WAWSDeploy
             bool doNotDelete = true,
             TraceLevel traceLevel = TraceLevel.Off,
             bool whatIf = false,
-            string siteName = null)
+            string targetPath = null)
         {
             sourcePath = Path.GetFullPath(sourcePath);
 
@@ -37,9 +37,6 @@ namespace WAWSDeploy
             DeploymentBaseOptions destBaseOptions;
             string destinationPath = SetBaseOptions(publishSettingsFile, out destBaseOptions, allowUntrusted);
 
-            if (!string.IsNullOrEmpty(siteName))
-                destinationPath += "/" + siteName;
-
             destBaseOptions.TraceLevel = traceLevel;
             destBaseOptions.Trace += destBaseOptions_Trace;
 
@@ -47,15 +44,37 @@ namespace WAWSDeploy
             if (!string.IsNullOrEmpty(password))
                 destBaseOptions.Password = password;
 
+            var sourceProvider = DeploymentWellKnownProvider.ContentPath;
+            var targetProvider = DeploymentWellKnownProvider.ContentPath;
+
+            // If a target path was specified, it could be virtual or physical
+            if (!string.IsNullOrEmpty(targetPath))
+            {
+                if (Path.IsPathRooted(targetPath))
+                {
+                    // If it's rooted (e.g. d:\home\site\foo), use DirPath
+                    sourceProvider = targetProvider = DeploymentWellKnownProvider.DirPath;
+
+                    destinationPath = targetPath;
+                }
+                else
+                {
+                    // It's virtual, so append it to what we got from the publish profile
+                    destinationPath += "/" + targetPath;
+                }
+            }
+
             // If the content path is a zip file, use the Package provider
-            DeploymentWellKnownProvider provider;
             if (Path.GetExtension(sourcePath).Equals(".zip", StringComparison.OrdinalIgnoreCase))
             {
-                provider = DeploymentWellKnownProvider.Package;
-            }
-            else
-            {
-                provider = DeploymentWellKnownProvider.ContentPath;
+                // For some reason, we can't combine a zip with a physical target path
+                // Maybe there is some way to make it work?
+                if (targetProvider == DeploymentWellKnownProvider.DirPath)
+                {
+                    throw new Exception("A source zip file can't be used with a physical target path");
+                }
+
+                sourceProvider = DeploymentWellKnownProvider.Package;
             }
 
             var syncOptions = new DeploymentSyncOptions
@@ -65,11 +84,11 @@ namespace WAWSDeploy
             };
 
             // Publish the content to the remote site
-            using (var deploymentObject = DeploymentManager.CreateObject(provider, sourcePath, sourceBaseOptions))
+            using (var deploymentObject = DeploymentManager.CreateObject(sourceProvider, sourcePath, sourceBaseOptions))
             {
                 // Note: would be nice to have an async flavor of this API...
 
-                return deploymentObject.SyncTo(DeploymentWellKnownProvider.ContentPath, destinationPath, destBaseOptions, syncOptions);
+                return deploymentObject.SyncTo(targetProvider, destinationPath, destBaseOptions, syncOptions);
             }
         }
 

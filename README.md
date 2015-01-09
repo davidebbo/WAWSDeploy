@@ -34,6 +34,10 @@ Target Path - The virtual directory to deploy to
 	
     WAWSDeploy C:\somefolder mysite.PublisSettings /t someVirtualDirectoryName
 
+Target Path - Using a physical target folder
+
+    WAWSDeploy C:\somefolder mysite.PublisSettings /t d:\home\site\blah
+
 
     
 
