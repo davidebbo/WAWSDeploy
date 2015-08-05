@@ -4,6 +4,8 @@ WAWSDeploy
 Simple command line tool to deploy a folder or a zip file to an Azure Website using WebDeploy. See this [post](http://blog.davidebbo.com/2014/03/WAWSDeploy.html)
 for details.
 
+**Note**: the `.PublishSettings` file discussed here is the one you can download for a specific  Azure Web App via the portal.
+
 Sample use:
 
     WAWSDeploy c:\somefolder mysite.PublishSettings
