@@ -41,7 +41,8 @@ namespace WAWSDeploy
                     !command.DeleteExistingFiles,
                     command.TraceLevel,
                     command.WhatIf,
-                    command.TargetPath
+                    command.TargetPath,
+                    command.UseChecksum
                     );
 
                 WriteLine("BytesCopied: {0}", changeSummary.BytesCopied);

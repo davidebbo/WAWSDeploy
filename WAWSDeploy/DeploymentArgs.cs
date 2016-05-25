@@ -48,6 +48,9 @@ namespace WAWSDeploy
         [ArgsMemberSwitch("t", "targetpath", "tp")]
         public string TargetPath { get; set; }
 
+        [ArgsMemberSwitch("c", "usechecksum", "cs")]
+        public bool UseChecksum { get; set; }
+
         public TraceLevel TraceLevel
         {
             get

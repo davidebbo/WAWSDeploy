@@ -28,7 +28,8 @@ namespace WAWSDeploy
             bool doNotDelete = true,
             TraceLevel traceLevel = TraceLevel.Off,
             bool whatIf = false,
-            string targetPath = null)
+            string targetPath = null,
+            bool useChecksum = false)
         {
             sourcePath = Path.GetFullPath(sourcePath);
 
@@ -80,7 +81,8 @@ namespace WAWSDeploy
             var syncOptions = new DeploymentSyncOptions
             {
                 DoNotDelete = doNotDelete, 
-                WhatIf = whatIf
+                WhatIf = whatIf,
+                UseChecksum = useChecksum
             };
 
             // Publish the content to the remote site
