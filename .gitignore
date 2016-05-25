@@ -7,6 +7,7 @@ App_Data
 *.results.xml
 /packages
 *.GhostDoc.xml
+.vs/
 
 #node
 lib-cov
