@@ -24,6 +24,10 @@ Delete files on the remote host
 
     WAWSDeploy c:\somefolder mysite.PublishSettings /d
 
+Use checksums instead of timestamps
+
+    WAWSDeploy c:\somefolder mysite.PublishSettings /c
+
 Verbose Logging
 
     WAWSDeploy c:\somefolder mysite.PublishSettings /v
@@ -51,18 +55,34 @@ Target Path - Using a physical target folder
 
 ## History
 
-### 3/26/2013: v1.3
+### 5/25/2016: v1.7
+
+Add /TargetPath switch
+
+### 1/9/2015: v1.6
+
+Add /TargetPath switch
+
+### 11/12/2014: v1.5
+
+Add -t switch to allow targeted deployment to a specific virtual directory.
+
+### 5/1/2014: v1.4
+
+Add -WhatIf and -deleteexistingfiles switches
+
+### 3/26/2014: v1.3
 
 Add support for untrusted certs.
 
-### 3/6/2013: v1.2
+### 3/6/2014: v1.2
 
 Support optionally passing password
 
-### 3/5/2013: v1.1
+### 3/5/2014: v1.1
 
 Support publishing from zip files
 
-### 3/5/2013: v1.0
+### 3/5/2014: v1.0
 
 Original version
