@@ -29,7 +29,8 @@ namespace WAWSDeploy
             TraceLevel traceLevel = TraceLevel.Off,
             bool whatIf = false,
             string targetPath = null,
-            bool useChecksum = false)
+            bool useChecksum = false,
+            bool appOfflineEnabled = false)
         {
             sourcePath = Path.GetFullPath(sourcePath);
 
@@ -84,13 +85,24 @@ namespace WAWSDeploy
                 WhatIf = whatIf,
                 UseChecksum = useChecksum
             };
-
+            if (appOfflineEnabled) AddDeploymentRule(syncOptions, "AppOffline");
+            
             // Publish the content to the remote site
             using (var deploymentObject = DeploymentManager.CreateObject(sourceProvider, sourcePath, sourceBaseOptions))
             {
                 // Note: would be nice to have an async flavor of this API...
 
                 return deploymentObject.SyncTo(targetProvider, destinationPath, destBaseOptions, syncOptions);
+            }
+        }
+
+        private void AddDeploymentRule(DeploymentSyncOptions syncOptions, string name)
+        {
+            DeploymentRule newRule;
+            var rules = DeploymentSyncOptions.GetAvailableRules();
+            if (rules.TryGetValue(name, out newRule))
+            {
+                syncOptions.Rules.Add(newRule);
             }
         }
 

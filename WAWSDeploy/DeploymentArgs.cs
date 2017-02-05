@@ -51,6 +51,9 @@ namespace WAWSDeploy
         [ArgsMemberSwitch("c", "usechecksum", "cs")]
         public bool UseChecksum { get; set; }
 
+        [ArgsMemberSwitch("o", "appoffline", "off")]
+        public bool AppOffline { get; set; }
+
         public TraceLevel TraceLevel
         {
             get

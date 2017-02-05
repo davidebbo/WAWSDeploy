@@ -20,6 +20,7 @@ namespace WAWSDeploy
                 WriteLine(@" /w  /WhatIf: don't actually perform the publishing");
                 WriteLine(@" /t  /TargetPath: the virtual or physical directory to deploy to");
                 WriteLine(@" /c  /cs: use checksum");
+                WriteLine(@" /o  /AppOffline: automatically take an ASP.Net application offline before publishing to it.");
                 return;
             }
 
@@ -43,7 +44,8 @@ namespace WAWSDeploy
                     command.TraceLevel,
                     command.WhatIf,
                     command.TargetPath,
-                    command.UseChecksum
+                    command.UseChecksum,
+                    command.AppOffline
                     );
 
                 WriteLine("BytesCopied: {0}", changeSummary.BytesCopied);
