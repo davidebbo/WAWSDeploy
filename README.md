@@ -55,6 +55,10 @@ Target Path - Using a physical target folder
 
 ## History
 
+### 2/4/2017: v1.8
+
+Add /AppOffline switch
+
 ### 5/25/2016: v1.7
 
 Add /TargetPath switch
