@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using Microsoft.Web.Deployment;
 
 namespace WAWSDeploy
@@ -21,6 +20,8 @@ namespace WAWSDeploy
                 WriteLine(@" /t  /TargetPath: the virtual or physical directory to deploy to");
                 WriteLine(@" /c  /cs: use checksum");
                 WriteLine(@" /o  /AppOffline: automatically take an ASP.Net application offline before publishing to it.");
+                WriteLine(@" /r  /RetryAttempts: number of deployment retry attempts in case of failure (default: 5)");
+                WriteLine(@" /i  /RetryInterval: retry interval in ms between attempts in case of failure (default: 1000)");
                 return;
             }
 
@@ -45,7 +46,9 @@ namespace WAWSDeploy
                     command.WhatIf,
                     command.TargetPath,
                     command.UseChecksum,
-                    command.AppOffline
+                    command.AppOffline,
+                    command.RetryAttempts,
+                    command.RetryInterval
                     );
 
                 WriteLine("BytesCopied: {0}", changeSummary.BytesCopied);

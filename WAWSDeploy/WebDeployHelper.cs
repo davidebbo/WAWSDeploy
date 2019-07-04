@@ -30,7 +30,9 @@ namespace WAWSDeploy
             bool whatIf = false,
             string targetPath = null,
             bool useChecksum = false,
-            bool appOfflineEnabled = false)
+            bool appOfflineEnabled = false,
+            int? retryAttempts = null,
+            int? retryInterval = null)
         {
             sourcePath = Path.GetFullPath(sourcePath);
 
@@ -45,6 +47,12 @@ namespace WAWSDeploy
             // use the password from the command line args if provided
             if (!string.IsNullOrEmpty(password))
                 destBaseOptions.Password = password;
+
+            if (retryAttempts != null)
+                destBaseOptions.RetryAttempts = (int) retryAttempts;
+
+            if (retryInterval != null)
+                destBaseOptions.RetryInterval = (int) retryInterval;
 
             var sourceProvider = DeploymentWellKnownProvider.ContentPath;
             var targetProvider = DeploymentWellKnownProvider.ContentPath;

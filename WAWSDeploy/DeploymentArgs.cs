@@ -1,4 +1,6 @@
 ﻿using Args;
+using Args.Help;
+using System.ComponentModel;
 using System.Diagnostics;
 
 namespace WAWSDeploy
@@ -53,6 +55,12 @@ namespace WAWSDeploy
 
         [ArgsMemberSwitch("o", "appoffline", "off")]
         public bool AppOffline { get; set; }
+
+        [ArgsMemberSwitch("r", "retryattempts", "ra")]
+        public int? RetryAttempts { get; set; }
+
+        [ArgsMemberSwitch("i", "retryinterval", "ri")]
+        public int? RetryInterval { get; set; }
 
         public TraceLevel TraceLevel
         {
