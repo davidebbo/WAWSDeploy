@@ -1,4 +1,6 @@
 ﻿using System;
+using Args.Help;
+using Args.Help.Formatters;
 using Microsoft.Web.Deployment;
 
 namespace WAWSDeploy
@@ -7,26 +9,17 @@ namespace WAWSDeploy
     {
         static void Main(string[] args)
         {
+            var model = Args.Configuration.Configure<DeploymentArgs>();
             if (args.Length < 2)
             {
                 WriteLine(@"WAWSDeploy version {0}", typeof(Program).Assembly.GetName().Version);
-                WriteLine(@"Usage: WAWSDeploy.exe c:\SomeFolder MySite.PublishSettings [flags]");
-                WriteLine(@"Options:");
-                WriteLine(@" /p  /password: provide the password if it's not in the profile");
-                WriteLine(@" /d  /DeleteExistingFiles: delete target files that don't exist at the source");
-                WriteLine(@" /au /AllowUntrusted: skip cert verification");
-                WriteLine(@" /v  /Verbose: Verbose mode");
-                WriteLine(@" /w  /WhatIf: don't actually perform the publishing");
-                WriteLine(@" /t  /TargetPath: the virtual or physical directory to deploy to");
-                WriteLine(@" /c  /cs: use checksum");
-                WriteLine(@" /o  /AppOffline: automatically take an ASP.Net application offline before publishing to it.");
-                WriteLine(@" /r  /RetryAttempts: number of deployment retry attempts in case of failure (default: 5)");
-                WriteLine(@" /i  /RetryInterval: retry interval in ms between attempts in case of failure (default: 1000)");
+                var help = new HelpProvider();
+                new ConsoleHelpFormatter().WriteHelp(help.GenerateModelHelp(model), Console.Out);
                 return;
             }
 
             // parse the command line args
-            var command = Args.Configuration.Configure<DeploymentArgs>().CreateAndBind(args);
+            var command = model.CreateAndBind(args);
 
             try
             {
