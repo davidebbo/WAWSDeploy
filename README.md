@@ -55,6 +55,10 @@ Target Path - Using a physical target folder
 
 ## History
 
+### 7/5/2019: v1.9
+
+Add /RetryAttempts and /RetryInterval switches
+
 ### 2/4/2017: v1.8
 
 Add /AppOffline switch
