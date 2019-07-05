@@ -17,5 +17,7 @@
     <file src="bin\debug\WAWSDeploy.exe" target="tools" />
     <file src="bin\debug\WAWSDeploy.exe.config" target="tools" />
     <file src="bin\debug\Args.dll" target="tools" />
+    <file src="..\LICENSE.txt" target="tools" />
+    <file src="..\VERIFICATION.txt" target="tools" />
   </files>
 </package>
