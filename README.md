@@ -1,51 +1,73 @@
 WAWSDeploy
 ==========
 
-Simple command line tool to deploy a folder or a zip file to an Azure Website using WebDeploy. See this [post](http://blog.davidebbo.com/2014/03/WAWSDeploy.html)
-for details.
+Simple command line tool to deploy a folder or a zip file to an Azure Website using WebDeploy.  
+See this [post](http://blog.davidebbo.com/2014/03/WAWSDeploy.html) for details.
 
 **Note**: the `.PublishSettings` file discussed here is the one you can download for a specific  Azure Web App via the portal.
 
 Sample use:
-
-    WAWSDeploy c:\somefolder mysite.PublishSettings
-    WAWSDeploy c:\somefile.zip mysite.PublishSettings
+```PowerShell
+WAWSDeploy c:\somefolder mysite.PublishSettings
+WAWSDeploy c:\somefile.zip mysite.PublishSettings
+```
 
 With optional password argument
-
-    WAWSDeploy c:\somefolder mysite.PublishSettings /p mypubsettingspassword
-    WAWSDeploy c:\somefolder mysite.PublishSettings /password mypubsettingspassword
+```PowerShell
+WAWSDeploy c:\somefolder mysite.PublishSettings /p mypubsettingspassword
+WAWSDeploy c:\somefolder mysite.PublishSettings /password mypubsettingspassword
+```
 
 Allowing untrusted cert
-
-    WAWSDeploy c:\somefolder mysite.PublishSettings /au
+```PowerShell
+WAWSDeploy c:\somefolder mysite.PublishSettings /au
+```
 
 Delete files on the remote host
-
-    WAWSDeploy c:\somefolder mysite.PublishSettings /d
+```PowerShell
+WAWSDeploy c:\somefolder mysite.PublishSettings /d
+```
 
 Use checksums instead of timestamps
-
-    WAWSDeploy c:\somefolder mysite.PublishSettings /c
+```PowerShell
+WAWSDeploy c:\somefolder mysite.PublishSettings /c
+```
 
 Verbose Logging
-
-    WAWSDeploy c:\somefolder mysite.PublishSettings /v
+```PowerShell
+WAWSDeploy c:\somefolder mysite.PublishSettings /v
+```
 
 [What If deployment](http://www.asp.net/web-forms/tutorials/deployment/advanced-enterprise-web-deployment/performing-a-what-if-deployment)
-
-    WAWSDeploy c:\somefolder mysite.PublishSettings /w
+```PowerShell
+WAWSDeploy c:\somefolder mysite.PublishSettings /w
+```
 
 Target Path - The virtual directory to deploy to
-	
-    WAWSDeploy C:\somefolder mysite.PublisSettings /t someVirtualDirectoryName
+```PowerShell
+WAWSDeploy C:\somefolder mysite.PublishSettings /t someVirtualDirectoryName
+```
 
 Target Path - Using a physical target folder
+```PowerShell
+WAWSDeploy C:\somefolder mysite.PublishSettings /t d:\home\site\blah
+```
 
-    WAWSDeploy C:\somefolder mysite.PublisSettings /t d:\home\site\blah
+App offline - Attempt to turn ASP.Net application off before deployment.
+```PowerShell
+WAWSDeploy C:\somefolder mysite.PublishSettings /o
+```
 
+Setup a higher number of retries in case of deployment failure (WebDeployment default is 5)
+```PowerShell
+WAWSDeploy C:\somefolder mysite.PublishSettings /r 10
+```
 
-    
+Setup the interval (in milliseconds) between each deployment attempts in case of deployment failure (WebDeployment default is 1000ms)
+```PowerShell
+WAWSDeploy C:\somefolder mysite.Publishsettings /i 6000
+```
+
 
 ## To build this project
 
