@@ -10,7 +10,6 @@ namespace WAWSDeploy
 {
     public class WebDeployHelper
     {
-
         public event EventHandler<DeploymentTraceEventArgs> DeploymentTraceEventHandler;
 
         /// <summary>
@@ -18,8 +17,16 @@ namespace WAWSDeploy
         /// </summary>
         /// <param name="sourcePath">The content path.</param>
         /// <param name="publishSettingsFile">The publish settings file.</param>
-        /// <param name="password">The password.</param>
-        /// <param name="allowUntrusted">Deploy even if destination certificate is untrusted</param>
+        /// <param name="password">The password (default is nul).</param>
+        /// <param name="allowUntrusted">Deploy even if destination certificate is untrusted (default is false)</param>
+        /// <param name="doNotDelete">Do not delete target files that don't exist at the source if true (default is true)</param>
+        /// <param name="traceLevel">TraceLevel to be used for log verbosity. Default is <see cref="TraceLevel.Off"/>TraceLevel.Off</param>
+        /// <param name="whatIf">Don't perform the actual publishing if true (default is false).</param>
+        /// <param name="targetPath">The virtual or physical directory to deploy to (defaults to null).</param>
+        /// <param name="useChecksum">Use checksum during deployment. (default is false).</param>
+        /// <param name="appOfflineEnabled">Attempts to automatically take the application offline before synching, defaults to false.</param>
+        /// <param name="retryAttempts">Allows to set the number of sync retry attempts (default is null and therefore 5 attempts).</param>
+        /// <param name="retryInterval">Allows to set the time interval (in ms.) between sync retry attempts (default is null and therefore 1000 ms).</param>
         /// <returns>DeploymentChangeSummary.</returns>
         public DeploymentChangeSummary DeployContentToOneSite(string sourcePath,
             string publishSettingsFile,
@@ -38,8 +45,7 @@ namespace WAWSDeploy
 
             var sourceBaseOptions = new DeploymentBaseOptions();
 
-            DeploymentBaseOptions destBaseOptions;
-            string destinationPath = SetBaseOptions(publishSettingsFile, out destBaseOptions, allowUntrusted);
+            string destinationPath = SetBaseOptions(publishSettingsFile, out var destBaseOptions, allowUntrusted);
 
             destBaseOptions.TraceLevel = traceLevel;
             destBaseOptions.Trace += destBaseOptions_Trace;
@@ -89,12 +95,12 @@ namespace WAWSDeploy
 
             var syncOptions = new DeploymentSyncOptions
             {
-                DoNotDelete = doNotDelete, 
+                DoNotDelete = doNotDelete,
                 WhatIf = whatIf,
                 UseChecksum = useChecksum
             };
             if (appOfflineEnabled) AddDeploymentRule(syncOptions, "AppOffline");
-            
+
             // Publish the content to the remote site
             using (var deploymentObject = DeploymentManager.CreateObject(sourceProvider, sourcePath, sourceBaseOptions))
             {
@@ -106,9 +112,8 @@ namespace WAWSDeploy
 
         private void AddDeploymentRule(DeploymentSyncOptions syncOptions, string name)
         {
-            DeploymentRule newRule;
             var rules = DeploymentSyncOptions.GetAvailableRules();
-            if (rules.TryGetValue(name, out newRule))
+            if (rules.TryGetValue(name, out var newRule))
             {
                 syncOptions.Rules.Add(newRule);
             }
@@ -116,13 +121,14 @@ namespace WAWSDeploy
 
         void destBaseOptions_Trace(object sender, DeploymentTraceEventArgs e)
         {
-            DeploymentTraceEventHandler.Invoke(sender, e);
+            DeploymentTraceEventHandler?.Invoke(sender, e);
         }
 
-        private string SetBaseOptions(string publishSettingsPath, out DeploymentBaseOptions deploymentBaseOptions, bool allowUntrusted)
+        private string SetBaseOptions(string publishSettingsPath, out DeploymentBaseOptions deploymentBaseOptions,
+            bool allowUntrusted)
         {
             PublishSettings publishSettings = new PublishSettings(publishSettingsPath);
-            
+
             deploymentBaseOptions = new DeploymentBaseOptions
             {
                 ComputerName = publishSettings.ComputerName,
@@ -139,7 +145,8 @@ namespace WAWSDeploy
             return publishSettings.SiteName;
         }
 
-        private static bool AllowCertificateCallback(object sender, X509Certificate cert, X509Chain chain, SslPolicyErrors errors)
+        private static bool AllowCertificateCallback(object sender, X509Certificate cert, X509Chain chain,
+            SslPolicyErrors errors)
         {
             return true;
         }

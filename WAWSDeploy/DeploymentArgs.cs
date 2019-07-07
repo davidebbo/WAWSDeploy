@@ -1,5 +1,4 @@
 ﻿using Args;
-using Args.Help;
 using System.ComponentModel;
 using System.Diagnostics;
 
@@ -77,9 +76,9 @@ namespace WAWSDeploy
             get
             {
                 if (Verbose)
-                    return System.Diagnostics.TraceLevel.Verbose;
+                    return TraceLevel.Verbose;
 
-                return System.Diagnostics.TraceLevel.Off;
+                return TraceLevel.Off;
             }
         }
     }
