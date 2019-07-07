@@ -68,6 +68,17 @@ Setup the interval (in milliseconds) between each deployment attempts in case of
 WAWSDeploy C:\somefolder mysite.Publishsettings /i 6000
 ```
 
+Skip the app_data directory during the deployment.
+```PowerShell
+WAWSDeploy C:\somefolder mysite.PublishSettings /sa
+```
+
+User defined folders regular expressions that should be skipped during deployment.
+```PowerShell
+WAWSDeploy C:\somefolder mysite.PublishSettings /sf .*my_tools .*local_cache
+```
+
+
 
 ## To build this project
 

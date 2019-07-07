@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Args.Help;
 using Args.Help.Formatters;
 using Microsoft.Web.Deployment;
@@ -27,7 +28,6 @@ namespace WAWSDeploy
 
                 webDeployHelper.DeploymentTraceEventHandler += Trace;
 
-
                 WriteLine("Starting deployment...");
                 DeploymentChangeSummary changeSummary = webDeployHelper.DeployContentToOneSite(
                     command.Folder, 
@@ -41,7 +41,9 @@ namespace WAWSDeploy
                     command.UseChecksum,
                     command.AppOffline,
                     command.RetryAttempts,
-                    command.RetryInterval
+                    command.RetryInterval,
+                    command.SkipAppData,
+                    command.SkipFoldersRegexps
                     );
 
                 WriteLine("BytesCopied: {0}", changeSummary.BytesCopied);

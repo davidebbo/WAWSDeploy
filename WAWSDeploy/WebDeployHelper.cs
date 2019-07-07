@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Microsoft.Web.Deployment;
 using System.Net;
@@ -27,6 +28,8 @@ namespace WAWSDeploy
         /// <param name="appOfflineEnabled">Attempts to automatically take the application offline before synching, defaults to false.</param>
         /// <param name="retryAttempts">Allows to set the number of sync retry attempts (default is null and therefore 5 attempts).</param>
         /// <param name="retryInterval">Allows to set the time interval (in ms.) between sync retry attempts (default is null and therefore 1000 ms).</param>
+        /// <param name="skipAppData">Allows to skip the app_data folder during deployment (default is false).</param>
+        /// <param name="skipFoldersRegexps">Regular expressions of folders that should be ignored during deployment.</param>
         /// <returns>DeploymentChangeSummary.</returns>
         public DeploymentChangeSummary DeployContentToOneSite(string sourcePath,
             string publishSettingsFile,
@@ -39,7 +42,9 @@ namespace WAWSDeploy
             bool useChecksum = false,
             bool appOfflineEnabled = false,
             int? retryAttempts = null,
-            int? retryInterval = null)
+            int? retryInterval = null,
+            bool skipAppData = false,
+            IEnumerable<string> skipFoldersRegexps = null)
         {
             sourcePath = Path.GetFullPath(sourcePath);
 
@@ -101,6 +106,18 @@ namespace WAWSDeploy
             };
             if (appOfflineEnabled) AddDeploymentRule(syncOptions, "AppOffline");
 
+            var skipRegexps = new List<string>();
+            if (skipAppData)
+            {
+                skipRegexps.Add(".*app_data");
+            }
+
+            if (skipFoldersRegexps != null)
+            {
+                skipRegexps.AddRange(skipFoldersRegexps);
+            }
+            AddSkippedFoldersToWebDeploy(skipRegexps, sourceBaseOptions, destBaseOptions);
+
             // Publish the content to the remote site
             using (var deploymentObject = DeploymentManager.CreateObject(sourceProvider, sourcePath, sourceBaseOptions))
             {
@@ -116,6 +133,18 @@ namespace WAWSDeploy
             if (rules.TryGetValue(name, out var newRule))
             {
                 syncOptions.Rules.Add(newRule);
+            }
+        }
+
+        private void AddSkippedFoldersToWebDeploy(IEnumerable<string> skippedFoldersRegexps,
+            DeploymentBaseOptions sourceBaseOptions, DeploymentBaseOptions destinationBaseOptions)
+        {
+            foreach (var skippedFoldersRegexp in skippedFoldersRegexps)
+            {
+                var skippedDirective = new DeploymentSkipDirective($"Skip_{skippedFoldersRegexp}",
+                    $"objectName=dirPath,absolutePath={skippedFoldersRegexp}", true);
+                sourceBaseOptions.SkipDirectives.Add(skippedDirective);
+                destinationBaseOptions.SkipDirectives.Add(skippedDirective);
             }
         }
 
