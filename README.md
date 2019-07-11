@@ -88,6 +88,10 @@ WAWSDeploy C:\somefolder mysite.PublishSettings /sf .*my_tools .*local_cache
 
 ## History
 
+### 7/10/2019: v1.10
+
+Add /SkipAppData and /SkipFoldersRegexps switches
+
 ### 7/5/2019: v1.9
 
 Add /RetryAttempts and /RetryInterval switches
